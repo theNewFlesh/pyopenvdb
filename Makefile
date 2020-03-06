@@ -147,7 +147,7 @@ PYTHON_LIB_DIR := /usr/lib/x86_64-linux-gnu/
 PYTHON_LIB := -lpython$(PYTHON_VERSION)
 # The directory containing libboost_python
 BOOST_PYTHON_LIB_DIR := /usr/lib/x86_64-linux-gnu
-BOOST_PYTHON_LIB := -lboost_python37
+BOOST_PYTHON_LIB := -lboost_python37 -lboost_numpy37
 # The directory containing arrayobject.h
 # (leave blank if NumPy is unavailable)
 # NUMPY_INCL_DIR := /usr/local/lib/python3.7/dist-packages/numpy/core/include/numpy
