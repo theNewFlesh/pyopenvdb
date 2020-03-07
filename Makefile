@@ -71,9 +71,9 @@ DESTDIR := /tmp/OpenVDB
 DESTDIR_LIB_DIR := $(DESTDIR)/lib
 
 # The parent directory of the boost/ header directory
-BOOST_INCL_DIR := /include
+BOOST_INCL_DIR := /root/boost_1_68_0
 # The directory containing libboost_iostreams, libboost_system, etc.
-BOOST_LIB_DIR := /usr/lib/x86_64-linux-gnu/
+BOOST_LIB_DIR := /root/boost_1_68_0/stage/lib
 BOOST_LIB := -lboost_iostreams -lboost_system
 BOOST_THREAD_LIB := -lboost_thread
 
@@ -143,16 +143,14 @@ PYTHON_INCL_DIR := /include
 # The directory containing pyconfig.h
 PYCONFIG_INCL_DIR := /usr/include/python3.7m
 # The directory containing libpython
-PYTHON_LIB_DIR := /usr/lib/x86_64-linux-gnu/
+PYTHON_LIB_DIR := /usr/lib/x86_64-linux-gnu
 PYTHON_LIB := -lpython$(PYTHON_VERSION)
 # The directory containing libboost_python
-BOOST_PYTHON_LIB_DIR := /usr/lib/x86_64-linux-gnu
+BOOST_PYTHON_LIB_DIR := /root/boost_1_68_0/stage/lib
 BOOST_PYTHON_LIB := -lboost_python37 -lboost_numpy37
 # The directory containing arrayobject.h
 # (leave blank if NumPy is unavailable)
-# NUMPY_INCL_DIR := /usr/local/lib/python3.7/dist-packages/numpy/core/include/numpy
-# NUMPY_INCL_DIR := /root/miniconda3/envs/py36/lib/python3.6/site-packages/numpy/core/include/numpy
-NUMPY_INCL_DIR := /usr/lib/python3/dist-packages/numpy/core/include/numpy/
+NUMPY_INCL_DIR := /usr/lib/python3/dist-packages/numpy/core/include/numpy
 # The Epydoc executable
 # (leave blank if Epydoc is unavailable)
 EPYDOC := /rel/map/generic_default-2014.24.237/bin/epydoc
