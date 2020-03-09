@@ -1,0 +1,24 @@
+# Run the vision service stack
+
+# Required variables
+#  - CURRENT_USER: The uid:gid value to ensure the bind mounted volume's
+#                  permissions match the host
+#  - REPO_PATH: The abs path to the user's repository on the host
+
+version: '3.4'
+volumes:
+  cache:
+services:
+
+  vision:
+    container_name: docker_pyopenvdb
+    image: ${IMAGE}
+    build:
+      context: .
+      dockerfile: pyopenvdb.dockerfile
+    userns_mode: "host"
+    user: root
+    volumes:
+      - ${REPO_PATH}:/root/docker_pyopenvdb
+    working_dir: "/root"
+    command: "tail -f /dev/null"
