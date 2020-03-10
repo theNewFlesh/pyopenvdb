@@ -20,13 +20,16 @@ RUN echo "\n${CYAN}INSTALL DEPENDENCIES${NO_COLOR}"; \
         libopenexr-dev \
         libtbb-dev \
         libz-dev \
+        patchelf \
         python3-dev \
-        python3-numpy \ 
+        python3-numpy \
         python3-pip \
-        zlibc
+        zlibc && \
+    pip3 install \
+        auditwheel
 
 ADD https://dl.bintray.com/boostorg/release/1.68.0/source/boost_1_68_0.tar.gz boost.tar.gz
-RUN echo "\n${CYAN}DOWNLOAD BOOST${NO_COLOR}"; \ 
+RUN echo "\n${CYAN}DOWNLOAD BOOST${NO_COLOR}"; \
     tar xzf /root/boost.tar.gz && \
     echo "using python"                  >> /root/user-config.jam && \
     echo "    : 3.7"                     >> /root/user-config.jam && \

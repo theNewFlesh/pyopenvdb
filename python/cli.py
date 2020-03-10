@@ -143,6 +143,40 @@ def get_image_id_command():
     return cmd
 
 
+def get_build_command(info):
+    '''
+    Copy shared object files to build directory.
+
+    Args:
+        info (dict): Info dictionary.
+
+    Returns:
+        str: Command.
+    '''
+    cmd = '{exec} bash -c "'
+    cmd += 'rm -rf /tmp/{repo}/lib; '
+    cmd += 'mkdir /tmp/{repo}/lib; '
+    cmd += 'cp /usr/lib/libblosc.so.1.15.1                               /tmp/{repo}/lib/libblosc.so.1; '
+    cmd += 'cp /root/boost_1_68_0/stage/lib/libboost_iostreams.so.1.68.0 /tmp/{repo}/lib/libboost_iostreams.so; '
+    cmd += 'cp /root/boost_1_68_0/stage/lib/libboost_numpy37.so.1.68.0   /tmp/{repo}/lib/libboost_numpy37.so; '
+    cmd += 'cp /root/boost_1_68_0/stage/lib/libboost_python37.so.1.68.0  /tmp/{repo}/lib/libboost_python37.so.1.68.0; '
+    cmd += 'cp /usr/lib/x86_64-linux-gnu/libHalf.so.23.0.0               /tmp/{repo}/lib/libHalf.so.23; '
+    cmd += 'cp /usr/lib/x86_64-linux-gnu/libm.so.6                       /tmp/{repo}/lib/libm.so.6; '
+    cmd += 'cp /root/openvdb/openvdb/libopenvdb.so.7.1.0                 /tmp/{repo}/lib/libopenvdb.so.7.1; '
+    cmd += 'cp /usr/lib/x86_64-linux-gnu/libsnappy.so.1.1.7              /tmp/{repo}/lib/libsnappy.so.1; '
+    cmd += 'cp /usr/lib/x86_64-linux-gnu/libtbb.so.2                     /tmp/{repo}/lib/libtbb.so.2; '
+    cmd += 'cp /usr/lib/x86_64-linux-gnu/libzstd.so.1.3.8                /tmp/{repo}/lib/libzstd.so.1; '
+    cmd += 'cp /root/openvdb/openvdb/pyopenvdb.so                        /tmp/{repo}/lib/pyopenvdb.so; '
+    cmd += 'chmod +x /tmp/{repo}/lib/*; '
+
+    cmd += '" '
+    cmd = cmd.format(
+        repo=REPO,
+        exec=get_docker_exec_command(info)
+    )
+    return cmd
+
+
 def get_publish_command(info):
     '''
     Publish repository to python package index.
@@ -153,46 +187,55 @@ def get_publish_command(info):
     Returns:
         str: Command.
     '''
-    cmd = '{exec} bash -c "'
+    # setup temporary directory for building package
+    setup = '{exec} bash -c "'
+    setup += 'rm -rf /tmp/{repo}; '
+    setup += 'cp -r /root/{repo}/python /tmp/{repo}; '
+    setup += 'cp /root/{repo}/README.md /tmp/{repo}/README.md; '
+    setup += 'cp /root/{repo}/LICENSE /tmp/{repo}/LICENSE; '
+    setup += 'cp /root/{repo}/pip/MANIFEST.in /tmp/{repo}/MANIFEST.in; '
+    setup += 'cp /root/{repo}/pip/setup.cfg /tmp/{repo}/; '
+    setup += 'cp /root/{repo}/pip/setup.py /tmp/{repo}/; '
+    setup += 'cp /root/{repo}/pip/version.txt /tmp/{repo}/; '
+    setup += '" '
 
-    cmd += 'rm -rf /tmp/{repo}; '
-    cmd += 'rm -rf /tmp/deps; '
-    cmd += 'cp -r /root/{repo}/python /tmp/{repo}; '
-    cmd += 'cp /root/{repo}/README.md /tmp/{repo}/README.md; '
-    cmd += 'cp /root/{repo}/LICENSE /tmp/{repo}/LICENSE; '
-    cmd += 'cp /root/{repo}/pip/MANIFEST.in /tmp/{repo}/MANIFEST.in; '
-    cmd += 'cp /root/{repo}/pip/setup.cfg /tmp/{repo}/; '
-    cmd += 'cp /root/{repo}/pip/setup.py /tmp/{repo}/; '
-    cmd += 'cp /root/{repo}/pip/version.txt /tmp/{repo}/; '
+    setup = setup.format(
+        repo=REPO,
+        exec=get_docker_exec_command(info)
+    )
 
-    cmd += 'mkdir /tmp/{repo}/deps; '
-    cmd += 'cp /usr/lib/libblosc.so.1.15.1                               /tmp/{repo}/deps/libblosc.so.1; '
-    cmd += 'cp /root/boost_1_68_0/stage/lib/libboost_iostreams.so.1.68.0 /tmp/{repo}/deps/libboost_iostreams.so; '
-    cmd += 'cp /root/boost_1_68_0/stage/lib/libboost_numpy37.so.1.68.0   /tmp/{repo}/deps/libboost_numpy37.so; '
-    cmd += 'cp /root/boost_1_68_0/stage/lib/libboost_python37.so.1.68.0  /tmp/{repo}/deps/libboost_python37.so; '
-    cmd += 'cp /usr/lib/x86_64-linux-gnu/libHalf.so.23.0.0               /tmp/{repo}/deps/libHalf.so.23; '
-    cmd += 'cp /usr/lib/x86_64-linux-gnu/libm.so.6                       /tmp/{repo}/deps/libm.so.6; '
-    cmd += 'cp /root/openvdb/openvdb/libopenvdb.so.7.1.0                 /tmp/{repo}/deps/libopenvdb.so.7.1; '
-    cmd += 'cp /usr/lib/x86_64-linux-gnu/libsnappy.so.1.1.7              /tmp/{repo}/deps/libsnappy.so.1; '
-    cmd += 'cp /usr/lib/x86_64-linux-gnu/libtbb.so.2                     /tmp/{repo}/deps/libtbb.so.2; '
-    cmd += 'cp /usr/lib/x86_64-linux-gnu/libzstd.so.1.3.8                /tmp/{repo}/deps/libzstd.so.1; '
-    cmd += 'cp /root/openvdb/openvdb/pyopenvdb.so                        /tmp/{repo}/deps/pyopenvdb.so; '
-    cmd += 'chmod +x /tmp/{repo}/deps/*; '
+    # create build directory with required so files
+    build = get_build_command(info)
 
-    cmd += '"; '
+    # build initial wheel
+    wheel = '''{exec} python3.7 setup.py bdist_wheel
+        --bdist-dir lib
+        --dist-dir dist
+        --python-tag cp37
+        --plat-name linux_x86_64'''
+    wheel = wheel.format(
+        exec=get_docker_exec_command(info, '/tmp/' + REPO)
+    )
 
-    cmd += '''{exec2} python3.7 setup.py bdist_wheel
-                --bdist-dir ./deps
-                --dist-dir ./dist
-                --python-tag cp37
-                --plat-name linux_x86_64'''
+    # injects /lib files into new wheel file
+    repair = '{exec} bash -c "'
+    repair += 'export LD_LIBRARY_PATH=/tmp/{repo}/lib && '
+    repair += '''auditwheel repair ./dist/*.whl
+        --plat linux_x86_64
+        --lib-sdir lib
+        --wheel-dir dist
+    '''
+    repair += '"'
+    repair = repair.format(
+        exec=get_docker_exec_command(info, '/tmp/' + REPO),
+        repo=REPO,
+    )
+
+    # create master command
+    cmd = ' && '.join([setup, build, wheel, build, repair])
+
     # cmd += '{exec2} twine upload dist/*; '
     # cmd += '{exec} rm -rf /tmp/{repo}; '
-    cmd = cmd.format(
-        repo=REPO,
-        exec=get_docker_exec_command(info),
-        exec2=get_docker_exec_command(info, '/tmp/' + REPO)
-    )
     return cmd
 
 

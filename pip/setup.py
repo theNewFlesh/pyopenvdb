@@ -1,8 +1,7 @@
 from setuptools import setup
 import os
 
-DEPS = os.listdir('/tmp/docker_pyopenvdb/deps')
-DEPS = {'': x for x in DEPS}
+# LIB = {'': x for x in os.listdir('lib')}
 
 with open('version.txt') as f:
     VERSION = f.read().strip('\n')
@@ -13,7 +12,6 @@ with open('README.md') as f:
 
 setup(
     name='pyopenvdb',
-    packages=['deps'],
     version=VERSION,
     license='MPL version 2.0',
     description='Python bindings for Open Voxel Database',
@@ -30,5 +28,5 @@ setup(
       'Programming Language :: Python :: 3',
       'Programming Language :: Python :: 3.7',
     ],
-    package_data=DEPS,
+    package_dir={'': 'lib'},
 )
