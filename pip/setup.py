@@ -1,7 +1,4 @@
 from setuptools import setup
-import os
-
-# LIB = {'': x for x in os.listdir('lib')}
 
 with open('version.txt') as f:
     VERSION = f.read().strip('\n')
