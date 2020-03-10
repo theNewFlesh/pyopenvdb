@@ -1,0 +1,61 @@
+# python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# packaging
+.Python
+env/
+build/
+develop-eggs/
+dist/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# sphinx
+docs/_build/
+
+# web
+node_modules
+/.npm/*
+
+# c
+*.so
+
+# vim
+.*.swp
+.*.swo
+
+# os x files
+.DS_Store
+
+# pytest
+.pytest_cache/
+.coverage
+
+# ansible
+devops/ansible/**/*.retry
+
+# vscode
+.vscode/*
+
+# sublime sftp config
+sftp-config.json
+
+# docs
+docs/
+
+# jupyter
+.ipynb_checkpoints/
+.ipynb_checkpoints/*
+data/
+.cache/
+*.jupyterlab-workspace
