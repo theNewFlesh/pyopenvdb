@@ -9,7 +9,7 @@ ARG NO_COLOR='\033[0m'
 # install apt dependencies
 RUN echo "\n${CYAN}INSTALL DEPENDENCIES${NO_COLOR}"; \
     apt update && \
-    apt install -y \
+    apt install -y --fix-missing \
         cmake \
         git \
         libblosc-dev \
@@ -20,13 +20,17 @@ RUN echo "\n${CYAN}INSTALL DEPENDENCIES${NO_COLOR}"; \
         libopenexr-dev \
         libtbb-dev \
         libz-dev \
+        parallel \
         patchelf \
         python3-dev \
         python3-numpy \
         python3-pip \
-        zlibc && \
-    pip3 install \
-        auditwheel
+        unzip \
+        zlibc
+
+# install python dependencies
+RUN echo "\n${CYAN}INSTALL PYTHON DEPENDENCIES${NO_COLOR}"; \
+    pip3 install -r /root/docker_pyopenvdb/docker/dev_requirements.txt
 
 ADD https://dl.bintray.com/boostorg/release/1.68.0/source/boost_1_68_0.tar.gz boost.tar.gz
 RUN echo "\n${CYAN}DOWNLOAD BOOST${NO_COLOR}"; \
@@ -41,7 +45,7 @@ RUN echo "\n${CYAN}DOWNLOAD BOOST${NO_COLOR}"; \
 ENV CC=gcc
 ENV CXX=g++
 
-# build boost
+# build boost (this takes forever)
 WORKDIR /root/boost_1_68_0
 RUN echo "\n${CYAN}BUILD BOOST LIBRARIES${NO_COLOR}"; \
      ./bootstrap.sh \
@@ -50,7 +54,7 @@ RUN echo "\n${CYAN}BUILD BOOST LIBRARIES${NO_COLOR}"; \
         --with-python-root=/usr && \
     ./b2
 
-# BUILD PYOPENVDB
+# build pyopenvdb
 WORKDIR /root
 RUN echo "\n${CYAN}CLONE OPENVDB${NO_COLOR}"; \
     git clone https://github.com/AcademySoftwareFoundation/openvdb.git
@@ -59,13 +63,13 @@ COPY Makefile /root/openvdb/openvdb/Makefile
 RUN echo "\n${CYAN}BUILD PYOPENVDB${NO_COLOR}"; \
     make python
 
-# install pyopenvdb C/C++ dependencies
-RUN echo "\n${CYAN}INSTALL PYOPENVDB${NO_COLOR}"; \
-    cp /root/openvdb/openvdb/libopenvdb.so.7.1.0 /usr/local/lib/python3.7/dist-packages/libopenvdb.so.7.1 && \
-    cp /root/openvdb/openvdb/pyopenvdb.so /usr/lib/python3.7/pyopenvdb.so
+# # install pyopenvdb C/C++ dependencies
+# RUN echo "\n${CYAN}INSTALL PYOPENVDB${NO_COLOR}"; \
+#     cp /root/openvdb/openvdb/libopenvdb.so.7.1.0 /usr/local/lib/python3.7/dist-packages/libopenvdb.so.7.1 && \
+#     cp /root/openvdb/openvdb/pyopenvdb.so /usr/lib/python3.7/pyopenvdb.so
 
-# link pyopenvdb.so dependencies
-ENV LD_LIBRARY_PATH='/usr/local/lib/python3.7/dist-packages'
+# # link pyopenvdb.so dependencies
+# ENV LD_LIBRARY_PATH='/usr/local/lib/python3.7/dist-packages'
 
-RUN echo "\n${CYAN}TEST PYOPENVDB${NO_COLOR}"; \
-    python3.7 -c 'import pyopenvdb'
+# RUN echo "\n${CYAN}TEST PYOPENVDB${NO_COLOR}"; \
+#     python3.7 -c 'import pyopenvdb'

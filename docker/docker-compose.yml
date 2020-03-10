@@ -1,4 +1,4 @@
-# Run the vision service stack
+# Create a container for pyopenvdb
 
 # Required variables
 #  - CURRENT_USER: The uid:gid value to ensure the bind mounted volume's
@@ -10,7 +10,7 @@ volumes:
   cache:
 services:
 
-  vision:
+  pyopenvdb:
     container_name: docker_pyopenvdb
     image: ${IMAGE}
     build:

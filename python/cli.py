@@ -143,9 +143,9 @@ def get_image_id_command():
     return cmd
 
 
-def get_build_command(info):
+def get_copy_to_lib_command(info):
     '''
-    Copy shared object files to build directory.
+    Copy shared object files to lib directory.
 
     Args:
         info (dict): Info dictionary.
@@ -177,9 +177,9 @@ def get_build_command(info):
     return cmd
 
 
-def get_publish_command(info):
+def get_build_command(info):
     '''
-    Publish repository to python package index.
+    Build a pip wheel.
 
     Args:
         info (dict): Info dictionary.
@@ -187,6 +187,9 @@ def get_publish_command(info):
     Returns:
         str: Command.
     '''
+    exec1 = get_docker_exec_command(info)
+    exec2 = get_docker_exec_command(info, '/tmp/' + REPO)
+
     # setup temporary directory for building package
     setup = '{exec} bash -c "'
     setup += 'rm -rf /tmp/{repo}; '
@@ -197,15 +200,12 @@ def get_publish_command(info):
     setup += 'cp /root/{repo}/pip/setup.cfg /tmp/{repo}/; '
     setup += 'cp /root/{repo}/pip/setup.py /tmp/{repo}/; '
     setup += 'cp /root/{repo}/pip/version.txt /tmp/{repo}/; '
+    setup += 'cp /root/{repo}/docker/dev_requirements.txt /tmp/{repo}/; '
     setup += '" '
-
-    setup = setup.format(
-        repo=REPO,
-        exec=get_docker_exec_command(info)
-    )
+    setup = setup.format(repo=REPO, exec=exec1)
 
     # create build directory with required so files
-    build = get_build_command(info)
+    build = get_copy_to_lib_command(info)
 
     # build initial wheel
     wheel = '''{exec} python3.7 setup.py bdist_wheel
@@ -213,11 +213,9 @@ def get_publish_command(info):
         --dist-dir dist
         --python-tag cp37
         --plat-name linux_x86_64'''
-    wheel = wheel.format(
-        exec=get_docker_exec_command(info, '/tmp/' + REPO)
-    )
+    wheel = wheel.format(exec=exec2)
 
-    # injects /lib files into new wheel file
+    # injects /lib files into wheel file
     repair = '{exec} bash -c "'
     repair += 'export LD_LIBRARY_PATH=/tmp/{repo}/lib && '
     repair += '''auditwheel repair ./dist/*.whl
@@ -226,16 +224,32 @@ def get_publish_command(info):
         --wheel-dir dist
     '''
     repair += '"'
-    repair = repair.format(
-        exec=get_docker_exec_command(info, '/tmp/' + REPO),
-        repo=REPO,
-    )
+    repair = repair.format(exec=exec2, repo=REPO)
 
     # create master command
     cmd = ' && '.join([setup, build, wheel, build, repair])
+    return cmd
 
-    # cmd += '{exec2} twine upload dist/*; '
-    # cmd += '{exec} rm -rf /tmp/{repo}; '
+
+def get_publish_command(info):
+    '''
+    Publish repository to python package index.
+
+    Args:
+        info (dict): Info dictionary.
+
+    Returns:
+        str: Command.
+    '''
+
+    # run tox and twine
+    build = get_build_command(info)
+    tox = get_tox_command(info)
+    twine = '{exec} twine upload dist/*; '.format(exec=exec2)
+    rm = '{exec} rm -rf /tmp/{repo} /tmp/tox'.format(repo=REPO, exec=exec1)
+
+    # create master command
+    cmd = ' && '.join([build, tox, twine, rm])
     return cmd
 
 
@@ -309,21 +323,22 @@ def get_tox_command(info):
     Returns:
         str: Command.
     '''
-    cmd = '{exec} bash -c "'
-    cmd += 'rm -rf /tmp/{repo}; '
-    cmd += 'cp -R /root/{repo}/python /tmp/{repo}; '
-    cmd += 'cp /root/{repo}/README.md /tmp/{repo}/; '
-    cmd += 'cp /root/{repo}/LICENSE /tmp/{repo}/; '
-    cmd += 'cp /root/{repo}/docker/* /tmp/{repo}/; '
-    cmd += 'cp /root/{repo}/pip/* /tmp/{repo}/; '
-    cmd += 'cp -R /root/{repo}/resources /tmp; '
-    cmd += r"find /tmp/{repo} | grep -E '__pycache__|\.pyc$' | parallel 'rm -rf'; "
-    cmd += 'cd /tmp/{repo}; tox'
-    cmd += '"'
-    cmd = cmd.format(
+    build = get_build_command(info)
+
+    tox = '{exec} bash -c "'
+    tox += 'cp /root/{repo}/docker/* /tmp/{repo}/; '
+    tox += 'cp /root/{repo}/pip/* /tmp/{repo}/; '
+    tox += 'cp -R /root/{repo}/resources /tmp; '
+    tox += r"find /tmp/{repo} | grep -E '__pycache__|\.pyc$' | parallel 'rm -rf'; "
+    tox += 'cd /tmp/{repo}; tox'
+    tox += '"'
+    tox = tox.format(
         repo=REPO,
         exec=get_docker_exec_command(info),
     )
+
+    # create master command
+    cmd = ' && '.join([build, tox])
     return cmd
 
 
@@ -428,8 +443,6 @@ def main():
         cmd = get_image_id_command()
 
     elif mode == 'publish':
-        # cmd = get_tox_command(info)
-        # cmd += ' && ' + get_publish_command(info)
         cmd = get_publish_command(info)
 
     elif mode == 'python':
