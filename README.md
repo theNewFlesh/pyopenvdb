@@ -1,14 +1,20 @@
 # docker_pyopenvdb
 OpenVDB for python 3.7
+Creates a docker container, which is used to build and package pyopenvdb.
+
+# Installation
+1. Install [docker](https://docs.docker.com/v17.09/engine/installation)
+2. Install [docker-machine](https://docs.docker.com/machine/install-machine) (if running on macOS or Windows)
+3. Ensure docker-machine has at least 4 GB of memory allocated to it.
+4. `cd docker_pyopenvdb`
+5. `chmod +x bin/docker_pyopenvdb`
+6. `bin/docker_pyopenvdb start`
+
+The service should take several minutes to start up.
+
+Run `bin/docker_pyopenvdb --help` for more help on the command line tool.
 
 # Usage
 `>>>python3.7`
 
 `>>>import pyopenvdb`
-
-# Additional Install
-  * Just copy /usr/lib/python3.7/pyopenvdb.so into whatever directory your
-    python3.7 interpreter looks at.
-  * LD_LIBRARY_PATH is an environment variable that links pyopenvdb.so to its
-    C/C++ dependencies. It is set via the dockerfile, but call
-    `env | grep LD_LIBRARY_PATH` to ensure that it is set in your environment.
