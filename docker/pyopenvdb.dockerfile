@@ -29,7 +29,7 @@ RUN echo "\n${CYAN}INSTALL DEPENDENCIES${NO_COLOR}"; \
         zlibc
 
 # install python dependencies
-COPY dev_requirements.txt /root/dev_requirements.txt
+COPY docker/dev_requirements.txt /root/dev_requirements.txt
 RUN echo "\n${CYAN}INSTALL PYTHON DEPENDENCIES${NO_COLOR}"; \
     pip3 install -r /root/dev_requirements.txt
 

@@ -157,15 +157,18 @@ def get_copy_to_lib_command(info):
     cmd += 'rm -rf /tmp/{repo}/lib; '
     cmd += 'mkdir /tmp/{repo}/lib; '
     cmd += 'cp /usr/lib/libblosc.so.1.15.1                               /tmp/{repo}/lib/libblosc.so.1; '
-    cmd += 'cp /root/boost_1_68_0/stage/lib/libboost_iostreams.so.1.68.0 /tmp/{repo}/lib/libboost_iostreams.so; '
-    cmd += 'cp /root/boost_1_68_0/stage/lib/libboost_numpy37.so.1.68.0   /tmp/{repo}/lib/libboost_numpy37.so; '
+    cmd += 'cp /root/boost_1_68_0/stage/lib/libboost_iostreams.so.1.68.0 /tmp/{repo}/lib/libboost_iostreams.so.1.68.0; '
+    cmd += 'cp /root/boost_1_68_0/stage/lib/libboost_numpy37.so.1.68.0   /tmp/{repo}/lib/libboost_numpy37.so.1.68.0; '
     cmd += 'cp /root/boost_1_68_0/stage/lib/libboost_python37.so.1.68.0  /tmp/{repo}/lib/libboost_python37.so.1.68.0; '
     cmd += 'cp /usr/lib/x86_64-linux-gnu/libHalf.so.23.0.0               /tmp/{repo}/lib/libHalf.so.23; '
+    cmd += 'cp /usr/lib/x86_64-linux-gnu/liblog4cplus-1.1.so.9.0.0       /tmp/{repo}/lib/liblog4cplus-1.1.so.9; '
     cmd += 'cp /usr/lib/x86_64-linux-gnu/libm.so.6                       /tmp/{repo}/lib/libm.so.6; '
     cmd += 'cp /root/openvdb/openvdb/libopenvdb.so.7.1.0                 /tmp/{repo}/lib/libopenvdb.so.7.1; '
     cmd += 'cp /usr/lib/x86_64-linux-gnu/libsnappy.so.1.1.7              /tmp/{repo}/lib/libsnappy.so.1; '
     cmd += 'cp /usr/lib/x86_64-linux-gnu/libtbb.so.2                     /tmp/{repo}/lib/libtbb.so.2; '
-    cmd += 'cp /usr/lib/x86_64-linux-gnu/libzstd.so.1.3.8                /tmp/{repo}/lib/libzstd.so.1; '
+    cmd += 'cp /usr/lib/x86_64-linux-gnu/libtbbmalloc.so.2               /tmp/{repo}/lib/libtbbmalloc.so.2; '
+    cmd += 'cp /usr/lib/x86_64-linux-gnu/libtbbmalloc_proxy.so.2         /tmp/{repo}/lib/libtbbmalloc_proxy.so.2; '
+    cmd += 'cp /usr/lib/x86_64-linux-gnu/libzstd.so.1.3.8                /tmp/{repo}/lib/libzstd.so.1.3.8; '
     cmd += 'cp /root/openvdb/openvdb/pyopenvdb.so                        /tmp/{repo}/lib/pyopenvdb.so; '
     cmd += 'chmod +x /tmp/{repo}/lib/*; '
 
@@ -205,29 +208,31 @@ def get_build_command(info):
     setup = setup.format(repo=REPO, exec=exec1)
 
     # create build directory with required so files
-    build = get_copy_to_lib_command(info)
+    lib = get_copy_to_lib_command(info)
 
     # build initial wheel
     wheel = '''{exec} python3.7 setup.py bdist_wheel
         --bdist-dir lib
         --dist-dir dist
         --python-tag cp37
-        --plat-name linux_x86_64'''
+    '''
+    # --plat-name linux_x86_64
     wheel = wheel.format(exec=exec2)
 
     # injects /lib files into wheel file
     repair = '{exec} bash -c "'
     repair += 'export LD_LIBRARY_PATH=/tmp/{repo}/lib && '
     repair += '''auditwheel repair ./dist/*.whl
-        --plat linux_x86_64
         --lib-sdir lib
         --wheel-dir dist
+        --no-update-tags
     '''
+    # --plat linux_x86_64
     repair += '"'
     repair = repair.format(exec=exec2, repo=REPO)
 
     # create master command
-    cmd = ' && '.join([setup, build, wheel, build, repair])
+    cmd = ' && '.join([setup, lib, wheel, lib, repair])
     return cmd
 
 
@@ -422,18 +427,16 @@ def main():
     '''
     info = get_info()
     mode = info['mode']
-    docs = os.path.join('/root', REPO, 'docs')
     cmd = get_docker_command(info)
 
     if mode == 'bash':
         cmd = get_bash_command(info)
 
+    elif mode == 'build':
+        cmd = get_build_command(info)
+
     elif mode == 'container':
         cmd = get_container_id_command()
-
-    elif mode == 'coverage':
-        cmd = get_coverage_command(info)
-        cmd += '; ' + get_fix_permissions_command(info, docs)
 
     elif mode == 'destroy':
         cmd = get_stop_command(info)
