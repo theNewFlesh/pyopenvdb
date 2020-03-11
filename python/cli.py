@@ -93,14 +93,18 @@ def get_bash_command(info):
     return cmd
 
 
-def get_container_id_command():
+def get_container_id_command(info):
     '''
     Gets current container id.
+
+    Args:
+        info (dict): Info dictionary.
 
     Returns:
         str: Command.
     '''
-    cmd = 'docker ps | grep {repo} '.format(repo=REPO)
+    cmd = 'docker ps | grep {image_name} '
+    cmd = cmd.format(image_name=info['image_name'])
     cmd += "| head -n 1 | awk '{print $1}'"
     return cmd
 
@@ -132,14 +136,18 @@ def get_coverage_command(info):
     return cmd
 
 
-def get_image_id_command():
+def get_image_id_command(info):
     '''
     Gets currently built image id.
+
+    Args:
+        info (dict): Info dictionary.
 
     Returns:
         str: Command.
     '''
-    cmd = 'docker image ls | grep {repo} '.format(repo=REPO)
+    cmd = 'docker image ls | grep {image_name} '
+    cmd = cmd.format(image_name=info['image_name'])
     cmd += "| head -n 1 | awk '{print $3}'"
     return cmd
 
@@ -290,7 +298,7 @@ def get_remove_image_command(info):
     '''
     cmd = 'IMAGE_ID=$({image_command}); '
     cmd += 'docker image rm --force $IMAGE_ID'
-    cmd = cmd.format(image_command=get_image_id_command())
+    cmd = cmd.format(image_command=get_image_id_command(info))
     return cmd
 
 
@@ -399,7 +407,7 @@ def get_docker_exec_command(info, working_directory=None):
     cmd = cmd.format(
         env='PYTHONPATH="${PYTHONPATH}:' + '/root/{}/python" '.format(REPO),
         up_command=get_start_command(info),
-        container_command=get_container_id_command(),
+        container_command=get_container_id_command(info),
     )
     return cmd
 
@@ -443,14 +451,14 @@ def main():
         cmd = get_build_command(info)
 
     elif mode == 'container':
-        cmd = get_container_id_command()
+        cmd = get_container_id_command(info)
 
     elif mode == 'destroy':
         cmd = get_stop_command(info)
         cmd += '; ' + get_remove_image_command(info)
 
     elif mode == 'image':
-        cmd = get_image_id_command()
+        cmd = get_image_id_command(info)
 
     elif mode == 'publish':
         cmd = get_publish_command(info)
