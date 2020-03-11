@@ -26,4 +26,5 @@ setup(
       'Programming Language :: Python :: 3.7',
     ],
     package_dir={'': 'lib'},
+    install_requires='numpy>=1.16.2',
 )

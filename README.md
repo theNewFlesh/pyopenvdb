@@ -3,9 +3,8 @@ OpenVDB for python 3.7
 Creates a docker container, which is used to build and package pyopenvdb.
 
 # Installation
-1. pip install numpy
-2. pip install pyopenvdb
-3. `export LD_LIBRARY_PATH=`[parent directory of pyopenvdb.so]
+1. pip install pyopenvdb
+2. `export LD_LIBRARY_PATH=`[parent directory of pyopenvdb.so]
 
 # Installation
 1. Install [docker](https://docs.docker.com/v17.09/engine/installation)
