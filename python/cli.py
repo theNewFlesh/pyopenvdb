@@ -72,7 +72,8 @@ def get_info():
         args=args,
         mode=mode,
         compose_path=compose_path,
-        user=user
+        user=user,
+        image_name='thenewflesh/pyopenvdb'
     )
     return info
 
@@ -204,6 +205,7 @@ def get_build_command(info):
     setup += 'cp /root/{repo}/pip/setup.py /tmp/{repo}/; '
     setup += 'cp /root/{repo}/pip/version.txt /tmp/{repo}/; '
     setup += 'cp /root/{repo}/docker/dev_requirements.txt /tmp/{repo}/; '
+    setup += 'cp /root/{repo}/docker/prod_requirements.txt /tmp/{repo}/; '
     setup += '" '
     setup = setup.format(repo=REPO, exec=exec1)
 
@@ -413,13 +415,14 @@ def get_docker_compose_command(info):
         str: Command.
     '''
     cmd = 'CWD=`pwd`; cd {repo_path}/docker; '
-    cmd += 'REPO_PATH="{repo_path}" CURRENT_USER="{user}" IMAGE="{repo}" '
-    cmd += 'docker-compose -p {repo} -f {compose_path} '
+    cmd += 'REPO_PATH="{repo_path}" CURRENT_USER="{user}" IMAGE="{image_name}" '
+    cmd += 'docker-compose -p {image_name} -f {compose_path} '
     cmd = cmd.format(
         repo=REPO,
         repo_path=REPO_PATH,
         user=info['user'],
         compose_path=info['compose_path'],
+        image_name=info['image_name'],
     )
     return cmd
 

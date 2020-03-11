@@ -3,6 +3,9 @@ from setuptools import setup
 with open('version.txt') as f:
     VERSION = f.read().strip('\n')
 
+with open('prod_requirements.txt') as f:
+    PROD_REQUIREMENTS = f.read().split('\n')
+
 with open('README.md') as f:
     README = f.read()
 # ------------------------------------------------------------------------------
@@ -26,5 +29,5 @@ setup(
       'Programming Language :: Python :: 3.7',
     ],
     package_dir={'': 'lib'},
-    install_requires='numpy>=1.16.2',
+    install_requires=PROD_REQUIREMENTS,
 )
