@@ -246,15 +246,19 @@ def get_publish_command(info):
     Returns:
         str: Command.
     '''
-
     # run tox and twine
     build = get_build_command(info)
-    tox = get_tox_command(info)
-    twine = '{exec} twine upload dist/*; '.format(exec=exec2)
-    rm = '{exec} rm -rf /tmp/{repo} /tmp/tox'.format(repo=REPO, exec=exec1)
+    # tox = get_tox_command(info)
+    cmd = '{exec} twine upload dist/* && '
+    cmd += 'rm -rf /tmp/{repo} /tmp/tox'
+    cmd = cmd.format(
+        repo=REPO,
+        exec=get_docker_exec_command(info, '/tmp/' + REPO)
+    )
 
     # create master command
-    cmd = ' && '.join([build, tox, twine, rm])
+    # cmd = ' && '.join([build, tox, twine, rm])
+    cmd = build + ' && ' + cmd
     return cmd
 
 
