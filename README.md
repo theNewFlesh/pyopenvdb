@@ -3,9 +3,9 @@ OpenVDB for python 3.7
 Creates a docker container, which is used to build and package pyopenvdb.
 
 # Installation
-### Currently only for linux systems with x86_64 archiutecture
+### Currently only for linux systems with x86_64 architecture
 1. pip install pyopenvdb
-2. Find parent directory of pyopenvdb.so with `find / | grep -P 'pyopenvdb\.so`
+2. Find parent directory of pyopenvdb.so with `find / | grep -P 'pyopenvdb\.so` 
 3. `export LD_LIBRARY_PATH=`[parent directory]
 
 # Installation
