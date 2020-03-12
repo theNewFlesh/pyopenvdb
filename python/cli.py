@@ -259,12 +259,12 @@ def get_publish_command(info):
     '''
     # run tox and twine
     tox = get_tox_command(info)
-    cmd = '{exec} twine upload dist/* && '
+    cmd = '{exec} twine upload dist/*'
     cmd = cmd.format(
         repo=REPO,
         exec=get_docker_exec_command(info, '/tmp/' + REPO)
     )
-    cmd = tox + '&& ' + cmd
+    cmd = tox + ' && ' + cmd
     return cmd
 
 
