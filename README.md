@@ -23,4 +23,4 @@ Run `bin/pyopenvdb --help` for more help on the command line tool.
 # Usage
 `>>>python3.7`
 
-`>>>import pyopenvdb`
+`>>>import openvdb`
