@@ -342,7 +342,7 @@ def get_tox_command(info):
 
     tox = '{exec} bash -c "'
     tox += 'rm -rf /tmp/tox; '
-    tox += 'export LD_LIBRARY_PATH=/tmp/{repo}/lib; '
+    tox += 'export LD_LIBRARY_PATH=/foo/bar:/tmp/{repo}/lib; '
     tox += 'cp -R /root/{repo}/python /tmp/{repo}/; '
     tox += 'cp /root/{repo}/docker/* /tmp/{repo}/; '
     tox += 'cp /root/{repo}/pip/* /tmp/{repo}/; '
