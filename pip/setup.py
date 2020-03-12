@@ -28,6 +28,6 @@ setup(
       'Programming Language :: Python :: 3',
       'Programming Language :: Python :: 3.7',
     ],
-    package_dir={'': 'lib'},
+    packages=['openvdb'],
     install_requires=PROD_REQUIREMENTS,
 )

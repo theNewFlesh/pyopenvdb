@@ -7,10 +7,10 @@ import pytest
 
 class PyOpenVDBTests(unittest.TestCase):
     def test_import(self):
-        import pyopenvdb
+        import openvdb
 
     def test_numpy(self):
-        import pyopenvdb as vdb
+        import openvdb as vdb
         cube = Path(Path(__file__).parent.parent, 'resources', 'cube.vdb')\
             .absolute()\
             .as_posix()

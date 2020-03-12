@@ -208,6 +208,7 @@ def get_build_command(info):
     setup += 'cp -r /root/{repo}/python /tmp/{repo}; '
     setup += 'cp /root/{repo}/README.md /tmp/{repo}/README.md; '
     setup += 'cp /root/{repo}/LICENSE /tmp/{repo}/LICENSE; '
+    setup += 'cp -R /root/{repo}/python/openvdb /tmp/{repo}/; '
     setup += 'cp /root/{repo}/pip/MANIFEST.in /tmp/{repo}/MANIFEST.in; '
     setup += 'cp /root/{repo}/pip/setup.cfg /tmp/{repo}/; '
     setup += 'cp /root/{repo}/pip/setup.py /tmp/{repo}/; '
@@ -346,8 +347,7 @@ def get_tox_command(info):
 
     tox = '{exec} bash -c "'
     tox += 'rm -rf /tmp/tox; '
-    # tox += 'unset LD_LIBRARY_PATH; '
-    tox += 'export LD_LIBRARY_PATH=/tmp/{repo}/lib; ' # enable the above when package links /lib files
+    tox += 'export LD_LIBRARY_PATH=/tmp/{repo}/lib; '
     tox += 'cp -R /root/{repo}/python /tmp/{repo}/; '
     tox += 'cp /root/{repo}/docker/* /tmp/{repo}/; '
     tox += 'cp /root/{repo}/pip/* /tmp/{repo}/; '
