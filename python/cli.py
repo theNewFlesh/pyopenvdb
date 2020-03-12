@@ -345,11 +345,16 @@ def get_tox_command(info):
     build = get_build_command(info)
 
     tox = '{exec} bash -c "'
+    tox += 'rm -rf /tmp/tox; '
+    # tox += 'unset LD_LIBRARY_PATH; '
+    tox += 'export LD_LIBRARY_PATH=/tmp/{repo}/lib; ' # enable the above when package links /lib files
+    tox += 'cp -R /root/{repo}/python /tmp/{repo}/; '
     tox += 'cp /root/{repo}/docker/* /tmp/{repo}/; '
     tox += 'cp /root/{repo}/pip/* /tmp/{repo}/; '
-    tox += 'cp -R /root/{repo}/resources /tmp; '
+    tox += 'cp /tmp/{repo}/dist/*.whl /tmp/pyopenvdb-0.0.0-cp37-none-any.whl; '
+    tox += 'cp -R /root/{repo}/resources /tmp/{repo}/; '
     tox += r"find /tmp/{repo} | grep -E '__pycache__|\.pyc$' | parallel 'rm -rf'; "
-    tox += 'cd /tmp/{repo}; tox'
+    tox += 'cd /tmp/{repo}; tox --wheel --wheel-dirty'
     tox += '"'
     tox = tox.format(
         repo=REPO,
