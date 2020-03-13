@@ -7,6 +7,8 @@ Creates a docker container, which is used to build and package pyopenvdb.
 1. pip install pyopenvdb
 2. Find parent directory of pyopenvdb.so with `find / | grep -P 'pyopenvdb\.so'`
 3. `export LD_LIBRARY_PATH=`[parent directory]
+4. Add `import numpy` and `import openvdb` to ipykernel_launcher.py to get
+   jupyter lab to import without a pointer error.
 
 # Installation
 1. Install [docker](https://docs.docker.com/v17.09/engine/installation)
