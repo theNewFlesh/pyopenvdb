@@ -137,17 +137,17 @@ GLFW_MAJOR_VERSION := 3
 
 # The version of Python for which to build the OpenVDB module
 # (leave blank if Python is unavailable)
-PYTHON_VERSION := 3.7m
+PYTHON_VERSION := 3.8
 # The directory containing Python.h
 PYTHON_INCL_DIR := /include
 # The directory containing pyconfig.h
-PYCONFIG_INCL_DIR := /usr/include/python3.7m
+PYCONFIG_INCL_DIR := /usr/include/python3.8
 # The directory containing libpython
 PYTHON_LIB_DIR := /usr/lib/x86_64-linux-gnu
 PYTHON_LIB := -lpython$(PYTHON_VERSION)
 # The directory containing libboost_python
 BOOST_PYTHON_LIB_DIR := /root/boost_1_68_0/stage/lib
-BOOST_PYTHON_LIB := -lboost_python37 -lboost_numpy37
+BOOST_PYTHON_LIB := -lboost_python38 -lboost_numpy38
 # The directory containing arrayobject.h
 # (leave blank if NumPy is unavailable)
 NUMPY_INCL_DIR := /usr/lib/python3/dist-packages/numpy/core/include/numpy

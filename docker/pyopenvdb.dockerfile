@@ -37,9 +37,9 @@ ADD https://dl.bintray.com/boostorg/release/1.68.0/source/boost_1_68_0.tar.gz bo
 RUN echo "\n${CYAN}DOWNLOAD BOOST${NO_COLOR}"; \
     tar xzf /root/boost.tar.gz && \
     echo "using python"                  >> /root/user-config.jam && \
-    echo "    : 3.7"                     >> /root/user-config.jam && \
-    echo "    : /usr/bin/python3.7"      >> /root/user-config.jam && \
-    echo "    : /usr/include/python3.7m" >> /root/user-config.jam && \
+    echo "    : 3.8"                     >> /root/user-config.jam && \
+    echo "    : /usr/bin/python3.8"      >> /root/user-config.jam && \
+    echo "    : /usr/include/python3.8" >> /root/user-config.jam && \
     echo "    : /usr/local/lib"          >> /root/user-config.jam && \
     echo "    : <toolset>gcc;"           >> /root/user-config.jam
 
@@ -50,8 +50,8 @@ ENV CXX=g++
 WORKDIR /root/boost_1_68_0
 RUN echo "\n${CYAN}BUILD BOOST LIBRARIES${NO_COLOR}"; \
      ./bootstrap.sh \
-        --with-python=python3.7m \
-        --with-python-version=3.7 \
+        --with-python=python3.8 \
+        --with-python-version=3.8 \
         --with-python-root=/usr && \
     ./b2
 
@@ -66,11 +66,11 @@ RUN echo "\n${CYAN}BUILD PYOPENVDB${NO_COLOR}"; \
 
 # # install pyopenvdb C/C++ dependencies
 # RUN echo "\n${CYAN}INSTALL PYOPENVDB${NO_COLOR}"; \
-#     cp /root/openvdb/openvdb/libopenvdb.so.7.1.0 /usr/local/lib/python3.7/dist-packages/libopenvdb.so.7.1 && \
-#     cp /root/openvdb/openvdb/pyopenvdb.so /usr/lib/python3.7/pyopenvdb.so
+#     cp /root/openvdb/openvdb/libopenvdb.so.7.1.0 /usr/local/lib/python3.8/dist-packages/libopenvdb.so.7.1 && \
+#     cp /root/openvdb/openvdb/pyopenvdb.so /usr/lib/python3.8/pyopenvdb.so
 
 # # link pyopenvdb.so dependencies
-# ENV LD_LIBRARY_PATH='/usr/local/lib/python3.7/dist-packages'
+# ENV LD_LIBRARY_PATH='/usr/local/lib/python3.8/dist-packages'
 
 # RUN echo "\n${CYAN}TEST PYOPENVDB${NO_COLOR}"; \
-#     python3.7 -c 'import pyopenvdb'
+#     python3.8 -c 'import pyopenvdb'
