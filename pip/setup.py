@@ -11,10 +11,10 @@ with open('README.md') as f:
 # ------------------------------------------------------------------------------
 
 setup(
-    name='pyopenvdb',
+    name='pyopenvdb-3.8',
     version=VERSION,
     license='MPL version 2.0',
-    description='Python bindings for Open Voxel Database',
+    description='Python bindings for Open Voxel Database for python 3.8',
     long_description=README,
     long_description_content_type='text/markdown',
     author='Alex Braun',
@@ -26,7 +26,7 @@ setup(
       'Development Status :: 4 - Beta',
       'Intended Audience :: Developers',
       'Programming Language :: Python :: 3',
-      'Programming Language :: Python :: 3.7',
+      'Programming Language :: Python :: 3.8',
     ],
     packages=['openvdb'],
     install_requires=PROD_REQUIREMENTS,
