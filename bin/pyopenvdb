@@ -12,6 +12,6 @@ else
     if [ $dryrun == "False" ]; then
         eval `python3 ./python/cli.py $1 --args "$args"`
     else
-        echo `python3 ./python/cli.py $1 --args "$args"`
+        echo `python3 ./python/cli.py $1 --args "$args"` | sed $'s/; /;\\\n/g'
     fi
 fi
