@@ -167,8 +167,8 @@ def get_copy_to_lib_command(info):
     cmd += 'mkdir /tmp/{repo}/lib; '
     cmd += 'cp /usr/lib/libblosc.so.1.15.1                               /tmp/{repo}/lib/libblosc.so.1; '
     cmd += 'cp /root/boost_1_68_0/stage/lib/libboost_iostreams.so.1.68.0 /tmp/{repo}/lib/libboost_iostreams.so.1.68.0; '
-    cmd += 'cp /root/boost_1_68_0/stage/lib/libboost_numpy37.so.1.68.0   /tmp/{repo}/lib/libboost_numpy37.so.1.68.0; '
-    cmd += 'cp /root/boost_1_68_0/stage/lib/libboost_python37.so.1.68.0  /tmp/{repo}/lib/libboost_python37.so.1.68.0; '
+    cmd += 'cp /root/boost_1_68_0/stage/lib/libboost_numpy38.so.1.68.0   /tmp/{repo}/lib/libboost_numpy38.so.1.68.0; '
+    cmd += 'cp /root/boost_1_68_0/stage/lib/libboost_python38.so.1.68.0  /tmp/{repo}/lib/libboost_python38.so.1.68.0; '
     cmd += 'cp /usr/lib/x86_64-linux-gnu/libHalf.so.23.0.0               /tmp/{repo}/lib/libHalf.so.23; '
     cmd += 'cp /usr/lib/x86_64-linux-gnu/liblog4cplus-1.1.so.9.0.0       /tmp/{repo}/lib/liblog4cplus-1.1.so.9; '
     cmd += 'cp /usr/lib/x86_64-linux-gnu/libm.so.6                       /tmp/{repo}/lib/libm.so.6; '
@@ -222,10 +222,10 @@ def get_build_command(info):
     lib = get_copy_to_lib_command(info)
 
     # build initial wheel
-    wheel = '''{exec} python3.7 setup.py bdist_wheel
+    wheel = '''{exec} python3.8 setup.py bdist_wheel
         --bdist-dir lib
         --dist-dir dist
-        --python-tag cp37
+        --python-tag cp38
     '''
     # --plat-name linux_x86_64
     wheel = wheel.format(exec=exec2)
@@ -278,7 +278,7 @@ def get_python_command(info):
     Returns:
         str: Command.
     '''
-    cmd = "{exec} python3.7".format(exec=get_docker_exec_command(info))
+    cmd = "{exec} python3.8".format(exec=get_docker_exec_command(info))
     return cmd
 
 
@@ -346,7 +346,7 @@ def get_tox_command(info):
     tox += 'cp -R /root/{repo}/python /tmp/{repo}/; '
     tox += 'cp /root/{repo}/docker/* /tmp/{repo}/; '
     tox += 'cp /root/{repo}/pip/* /tmp/{repo}/; '
-    tox += 'cp /tmp/{repo}/dist/*.whl /tmp/pyopenvdb-0.0.0-cp37-none-any.whl; '
+    tox += 'cp /tmp/{repo}/dist/*.whl /tmp/pyopenvdb-0.0.0-cp38-none-any.whl; '
     tox += 'cp -R /root/{repo}/resources /tmp/{repo}/; '
     tox += r"find /tmp/{repo} | grep -E '__pycache__|\.pyc$' | parallel 'rm -rf'; "
     tox += 'cd /tmp/{repo}; tox --wheel --wheel-dirty'
