@@ -172,7 +172,7 @@ def get_copy_to_lib_command(info):
     cmd += 'cp /usr/lib/x86_64-linux-gnu/libHalf.so.23.0.0               /tmp/{repo}/lib/libHalf.so.23; '
     cmd += 'cp /usr/lib/x86_64-linux-gnu/liblog4cplus-1.1.so.9.0.0       /tmp/{repo}/lib/liblog4cplus-1.1.so.9; '
     cmd += 'cp /usr/lib/x86_64-linux-gnu/libm.so.6                       /tmp/{repo}/lib/libm.so.6; '
-    cmd += 'cp /root/openvdb/openvdb/libopenvdb.so.7.1.0                 /tmp/{repo}/lib/libopenvdb.so.7.1; '
+    cmd += 'cp /root/openvdb/openvdb/libopenvdb.so.7.2.0                 /tmp/{repo}/lib/libopenvdb.so.7.2; '
     cmd += 'cp /usr/lib/x86_64-linux-gnu/libsnappy.so.1.1.7              /tmp/{repo}/lib/libsnappy.so.1; '
     cmd += 'cp /usr/lib/x86_64-linux-gnu/libtbb.so.2                     /tmp/{repo}/lib/libtbb.so.2; '
     cmd += 'cp /usr/lib/x86_64-linux-gnu/libtbbmalloc.so.2               /tmp/{repo}/lib/libtbbmalloc.so.2; '
@@ -349,7 +349,7 @@ def get_tox_command(info):
     tox += 'cp /tmp/{repo}/dist/*.whl /tmp/pyopenvdb-0.0.0-cp38-none-any.whl; '
     tox += 'cp -R /root/{repo}/resources /tmp/{repo}/; '
     tox += r"find /tmp/{repo} | grep -E '__pycache__|\.pyc$' | parallel 'rm -rf'; "
-    tox += 'cd /tmp/{repo}; tox --wheel --wheel-dirty'
+    tox += 'cd /tmp/{repo}; python3.8 -m tox --wheel --wheel-dirty'
     tox += '"'
     tox = tox.format(
         repo=REPO,
