@@ -66,7 +66,7 @@ RUN echo "\n${CYAN}BUILD PYOPENVDB${NO_COLOR}"; \
 
 # # install pyopenvdb C/C++ dependencies
 # RUN echo "\n${CYAN}INSTALL PYOPENVDB${NO_COLOR}"; \
-#     cp /root/openvdb/openvdb/libopenvdb.so.7.1.0 /usr/local/lib/python3.8/dist-packages/libopenvdb.so.7.1 && \
+#     cp /root/openvdb/openvdb/libopenvdb.so.7.2.0 /usr/local/lib/python3.8/dist-packages/libopenvdb.so.7.2 && \
 #     cp /root/openvdb/openvdb/pyopenvdb.so /usr/lib/python3.8/pyopenvdb.so
 
 # # link pyopenvdb.so dependencies
