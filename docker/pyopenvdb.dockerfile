@@ -31,7 +31,7 @@ RUN echo "\n${CYAN}INSTALL DEPENDENCIES${NO_COLOR}"; \
 # install python dependencies
 COPY dev_requirements.txt /root/dev_requirements.txt
 RUN echo "\n${CYAN}INSTALL PYTHON DEPENDENCIES${NO_COLOR}"; \
-    pip3 install -r /root/dev_requirements.txt
+    python3.8 -m pip install -r /root/dev_requirements.txt
 
 ADD https://dl.bintray.com/boostorg/release/1.68.0/source/boost_1_68_0.tar.gz boost.tar.gz
 RUN echo "\n${CYAN}DOWNLOAD BOOST${NO_COLOR}"; \
