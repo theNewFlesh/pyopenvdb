@@ -1,6 +1,8 @@
 # docker_pyopenvdb
 OpenVDB for python 3.8
 Creates a docker container, which is used to build and package pyopenvdb.
+pyopenvdb.dockerfile is for development.
+prod_pyopenvdb.dockerfile is for testing installation of pyopenvdb pip package.
 
 # Installation
 ### Currently only for linux systems with x86_64 architecture
@@ -11,12 +13,15 @@ Creates a docker container, which is used to build and package pyopenvdb.
    jupyter lab to import without a pointer error.
 
 # Dev Installation
+Unless you intend on building and packing OpenVDB python bindings, you do not
+need to follow these instructions.
 1. Install [docker](https://docs.docker.com/v17.09/engine/installation)
 2. Install [docker-machine](https://docs.docker.com/machine/install-machine) (if running on macOS or Windows)
 3. Ensure docker-machine has at least 4 GB of memory allocated to it.
-4. `cd docker_pyopenvdb`
-5. `chmod +x bin/pyopenvdb`
-6. `bin/pyopenvdb start`
+4. `git clone git@github.com:theNewFlesh/docker_pyopenvdb.git`
+5. `cd docker_pyopenvdb`
+6. `chmod +x bin/pyopenvdb`
+7. `bin/pyopenvdb start`
 
 The service should take several minutes to start up.
 
