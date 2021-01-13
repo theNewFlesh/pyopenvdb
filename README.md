@@ -10,7 +10,7 @@ Creates a docker container, which is used to build and package pyopenvdb.
 4. Add `import numpy` and `import openvdb` to ipykernel_launcher.py to get
    jupyter lab to import without a pointer error.
 
-# Installation
+# Dev Installation
 1. Install [docker](https://docs.docker.com/v17.09/engine/installation)
 2. Install [docker-machine](https://docs.docker.com/machine/install-machine) (if running on macOS or Windows)
 3. Ensure docker-machine has at least 4 GB of memory allocated to it.
