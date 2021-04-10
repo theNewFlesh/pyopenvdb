@@ -1,10 +1,11 @@
-FROM ubuntu:19.04
+FROM ubuntu:20.04
 
 WORKDIR /root
 
 # coloring syntax for headers
 ARG CYAN='\033[0;36m'
 ARG NO_COLOR='\033[0m'
+ARG DEBIAN_FRONTEND="noninteractive"
 
 # install apt dependencies
 RUN echo "\n${CYAN}INSTALL DEPENDENCIES${NO_COLOR}"; \
@@ -25,6 +26,7 @@ RUN echo "\n${CYAN}INSTALL DEPENDENCIES${NO_COLOR}"; \
         python3-dev \
         python3-numpy \
         python3-pip \
+        tzdata \
         unzip \
         zlibc
 
@@ -39,7 +41,7 @@ RUN echo "\n${CYAN}DOWNLOAD BOOST${NO_COLOR}"; \
     echo "using python"                  >> /root/user-config.jam && \
     echo "    : 3.8"                     >> /root/user-config.jam && \
     echo "    : /usr/bin/python3.8"      >> /root/user-config.jam && \
-    echo "    : /usr/include/python3.8" >> /root/user-config.jam && \
+    echo "    : /usr/include/python3.8m" >> /root/user-config.jam && \
     echo "    : /usr/local/lib"          >> /root/user-config.jam && \
     echo "    : <toolset>gcc;"           >> /root/user-config.jam
 
@@ -50,7 +52,7 @@ ENV CXX=g++
 WORKDIR /root/boost_1_68_0
 RUN echo "\n${CYAN}BUILD BOOST LIBRARIES${NO_COLOR}"; \
      ./bootstrap.sh \
-        --with-python=python3.8 \
+        --with-python=python3.8m \
         --with-python-version=3.8 \
         --with-python-root=/usr && \
     ./b2
