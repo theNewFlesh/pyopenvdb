@@ -1,4 +1,4 @@
-# docker_pyopenvdb
+# pyopenvdb
 OpenVDB for python 3.7
 Creates a docker container, which is used to build and package pyopenvdb.
 pyopenvdb.dockerfile is for development.
