@@ -15,7 +15,7 @@
         >
     </a>
     <a href="http://www.alexgbraun.com" rel="nofollow noreferrer">
-        <img src="https://www.alexgbraun.com.s3-website-us-west-2.amazonaws.com/img/logo.png"
+        <img src="https://i.ibb.co/fvyMkpM/logo.png"
              alt="alexgbraun" width="30px" height="30px"
         >
     </a>
