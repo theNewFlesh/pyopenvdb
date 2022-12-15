@@ -19,8 +19,8 @@ setup(
     long_description_content_type='text/markdown',
     author='Alex Braun',
     author_email='Alexander.G.Braun@gmail.com',
-    url='https://github.com/theNewFlesh/docker_pyopenvdb',
-    download_url='https://github.com/theNewFlesh/docker_pyopenvdb/archive/' + VERSION + '.tar.gz',
+    url='https://github.com/theNewFlesh/pyopenvdb',
+    download_url='https://github.com/theNewFlesh/pyopenvdb/archive/' + VERSION + '.tar.gz',
     keywords=['OpenVDB', 'pyopenvdb'],
     classifiers=[
       'Development Status :: 4 - Beta',

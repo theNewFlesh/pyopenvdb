@@ -48,7 +48,7 @@ need to follow these instructions.
 2. Install [docker-machine](https://docs.docker.com/machine/install-machine) (if running on macOS or Windows)
 3. Ensure docker-machine has at least 4 GB of memory allocated to it.
 4. `git clone git@github.com:theNewFlesh/pyopenvdb.git`
-5. `cd docker_pyopenvdb`
+5. `cd pyopenvdb`
 6. `chmod +x bin/pyopenvdb`
 7. `bin/pyopenvdb start`
 
