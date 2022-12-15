@@ -1,3 +1,26 @@
+<p>
+    <a href="https://www.linkedin.com/in/alexandergbraun" rel="nofollow noreferrer">
+        <img src="https://www.gomezaparicio.com/wp-content/uploads/2012/03/linkedin-logo-1-150x150.png"
+             alt="linkedin" width="30px" height="30px"
+        >
+    </a>
+    <a href="https://github.com/theNewFlesh" rel="nofollow noreferrer">
+        <img src="https://tadeuzagallo.com/GithubPulse/assets/img/app-icon-github.png"
+             alt="github" width="30px" height="30px"
+        >
+    </a>
+    <a href="http://vimeo.com/user3965452" rel="nofollow noreferrer">
+        <img src="https://cdn1.iconfinder.com/data/icons/somacro___dpi_social_media_icons_by_vervex-dfjq/500/vimeo.png"
+             alt="vimeo" width="30px" height="30px"
+        >
+    </a>
+    <a href="http://www.alexgbraun.com" rel="nofollow noreferrer">
+        <img src="https://www.alexgbraun.com.s3-website-us-west-2.amazonaws.com/img/logo.png"
+             alt="alexgbraun" width="30px" height="30px"
+        >
+    </a>
+</p>
+
 # pyopenvdb
 OpenVDB for python 3.7
 Creates a docker container, which is used to build and package pyopenvdb.
@@ -18,7 +41,7 @@ need to follow these instructions.
 1. Install [docker](https://docs.docker.com/v17.09/engine/installation)
 2. Install [docker-machine](https://docs.docker.com/machine/install-machine) (if running on macOS or Windows)
 3. Ensure docker-machine has at least 4 GB of memory allocated to it.
-4. `git clone git@github.com:theNewFlesh/docker_pyopenvdb.git`
+4. `git clone git@github.com:theNewFlesh/pyopenvdb.git`
 5. `cd docker_pyopenvdb`
 6. `chmod +x bin/pyopenvdb`
 7. `bin/pyopenvdb start`
