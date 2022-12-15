@@ -9,6 +9,11 @@
              alt="github" width="30px" height="30px"
         >
     </a>
+    <a href="https://pypi.org/user/the-new-flesh" rel="nofollow noreferrer">
+        <img src="https://cdn.iconscout.com/icon/free/png-256/python-2-226051.png"
+             alt="pypi" width="30px" height="30px"
+        >
+    </a>
     <a href="http://vimeo.com/user3965452" rel="nofollow noreferrer">
         <img src="https://cdn1.iconfinder.com/data/icons/somacro___dpi_social_media_icons_by_vervex-dfjq/500/vimeo.png"
              alt="vimeo" width="30px" height="30px"
@@ -20,6 +25,7 @@
         >
     </a>
 </p>
+
 
 # pyopenvdb
 OpenVDB for python 3.7
