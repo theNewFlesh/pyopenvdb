@@ -26,6 +26,8 @@
     </a>
 </p>
 
+[![PyPI version](https://badge.fury.io/py/pyopenvdb.svg)](https://badge.fury.io/py/pyopenvdb)
+[![PyPI version](https://badge.fury.io/py/pyopenvdb-3.8.svg)](https://badge.fury.io/py/pyopenvdb-3.8)
 
 # pyopenvdb
 OpenVDB for python 3.7
