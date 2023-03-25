@@ -15,7 +15,7 @@
         >
     </a>
     <a href="http://vimeo.com/user3965452" rel="nofollow noreferrer">
-        <img src="https://cdn1.iconfinder.com/data/icons/somacro___dpi_social_media_icons_by_vervex-dfjq/500/vimeo.png"
+        <img src="https://cdn.iconscout.com/icon/free/png-512/movie-52-151107.png?f=avif&w=512"
              alt="vimeo" width="30px" height="30px"
         >
     </a>
@@ -26,8 +26,17 @@
     </a>
 </p>
 
-[![PyPI version](https://badge.fury.io/py/pyopenvdb.svg)](https://badge.fury.io/py/pyopenvdb)
-[![PyPI version](https://badge.fury.io/py/pyopenvdb-3.8.svg)](https://badge.fury.io/py/pyopenvdb-3.8)
+<!-- <img id="logo" src="resources/logo.png" style="max-width: 717px"> -->
+
+[![](https://img.shields.io/badge/License-MIT-F77E70?style=for-the-badge)](https://github.com/theNewFlesh/pyopenvdb/blob/master/LICENSE)
+
+[![](https://img.shields.io/pypi/pyversions/pyopenvdb?style=for-the-badge&label=Python&color=A0D17B&logo=python&logoColor=A0D17B)](https://github.com/theNewFlesh/pyopenvdb/blob/master/pip/version.txt)
+[![](https://img.shields.io/pypi/v/pyopenvdb?style=for-the-badge&label=PyPI&color=5F95DE&logo=pypi&logoColor=5F95DE)](https://pypi.org/project/pyopenvdb/)
+[![](https://img.shields.io/pypi/dm/pyopenvdb?style=for-the-badge&label=Downloads&color=5F95DE)](https://pepy.tech/project/pyopenvdb)
+
+[![](https://img.shields.io/pypi/pyversions/pyopenvdb-3.8?style=for-the-badge&label=Python&color=A0D17B&logo=python&logoColor=A0D17B)](https://github.com/theNewFlesh/pyopenvdb/blob/master/pip/version.txt)
+[![](https://img.shields.io/pypi/v/pyopenvdb-3.8?style=for-the-badge&label=PyPI&color=5F95DE&logo=pypi&logoColor=5F95DE)](https://pypi.org/project/pyopenvdb-3.8/)
+[![](https://img.shields.io/pypi/dm/pyopenvdb-3.8?style=for-the-badge&label=Downloads&color=5F95DE)](https://pepy.tech/project/pyopenvdb-3.8)
 
 # pyopenvdb
 OpenVDB for python 3.7
