@@ -39,7 +39,7 @@
 [![](https://img.shields.io/pypi/dm/pyopenvdb-3.8?style=for-the-badge&label=Downloads&color=5F95DE)](https://pepy.tech/project/pyopenvdb-3.8)
 
 # pyopenvdb
-OpenVDB for python 3.7
+OpenVDB for python 3.7 and python 3.8
 Creates a docker container, which is used to build and package pyopenvdb.
 pyopenvdb.dockerfile is for development.
 prod_pyopenvdb.dockerfile is for testing installation of pyopenvdb pip package.
