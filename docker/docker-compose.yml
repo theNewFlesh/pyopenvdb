@@ -19,6 +19,6 @@ services:
     userns_mode: "host"
     user: root
     volumes:
-      - ${REPO_PATH}:/root/docker_pyopenvdb
+      - ${REPO_PATH}:/root/pyopenvdb
     working_dir: "/root"
     command: "tail -f /dev/null"
