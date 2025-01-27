@@ -19,7 +19,7 @@
              alt="vimeo" width="30px" height="30px"
         >
     </a>
-    <a href="http://www.alexgbraun.com" rel="nofollow noreferrer">
+    <a href="https://alexgbraun.com" rel="nofollow noreferrer">
         <img src="https://i.ibb.co/fvyMkpM/logo.png"
              alt="alexgbraun" width="30px" height="30px"
         >
