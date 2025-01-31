@@ -26,8 +26,6 @@
     </a>
 </p>
 
-<!-- <img id="logo" src="resources/logo.png" style="max-width: 717px"> -->
-
 [![](https://img.shields.io/badge/License-MIT-F77E70?style=for-the-badge)](https://github.com/theNewFlesh/pyopenvdb/blob/master/LICENSE)
 
 [![](https://img.shields.io/pypi/pyversions/pyopenvdb?style=for-the-badge&label=Python&color=A0D17B&logo=python&logoColor=A0D17B)](https://github.com/theNewFlesh/pyopenvdb)
@@ -38,9 +36,12 @@
 [![](https://img.shields.io/pypi/v/pyopenvdb-3.8?style=for-the-badge&label=PyPI&color=5F95DE&logo=pypi&logoColor=5F95DE)](https://pypi.org/project/pyopenvdb-3.8/)
 [![](https://img.shields.io/pypi/dm/pyopenvdb-3.8?style=for-the-badge&label=Downloads&color=5F95DE)](https://pepy.tech/project/pyopenvdb-3.8)
 
+<p><img src="resources/logo.png"width="666px" height="360px"></p>
+
 # pyopenvdb
-OpenVDB for python 3.7 and python 3.8
-Creates a docker container, which is used to build and package pyopenvdb.
+OpenVDB stands for Open Voxel Database. It is a framework for working with 3D,
+volumetric data (3D pixels aka voxels). This project currently supports python 3.7 and 3.8.
+This repo creates a docker container, which is used to build and package pyopenvdb.
 pyopenvdb.dockerfile is for development.
 prod_pyopenvdb.dockerfile is for testing installation of pyopenvdb pip package.
 
