@@ -1,17 +1,31 @@
-#!/usr/bin/env bash
+#! /usr/bin/env bash
 
-dryrun=`python -c "import sys; print('--dryrun' in sys.argv[1:])" $@`
-args_flag=`python -c "import sys; print('--args' in sys.argv or '-a' in sys.argv[1:])" $@`
-help=`python -c "import sys; print('--help' in sys.argv or '-h' in sys.argv[1:])" $@`
-args=`python -c "import sys, re; x = filter(lambda x: not re.search('--?a(rgs)?|--dryrun', x), sys.argv[2:]); print(' '.join(x))" $@`
+# determine python path
+python2x=`which python`;
+python3x=`which python3`;
+if [ $python3x != "python3 not found" ]; then
+    pythonx=$python3x;
+elif [ $python2x != "python not found" ]; then
+    pythonx=$python2x;
+else
+    echo "Python interpreter not found.";
+    exit 1;
+fi
 
+# compute command line arguments
+dryrun=`$pythonx -c "import sys; print('--dryrun' in sys.argv[1:])" $@`
+args_flag=`$pythonx -c "import sys; print('--args' in sys.argv or '-a' in sys.argv[1:])" $@`
+help=`$pythonx -c "import sys; print('--help' in sys.argv or '-h' in sys.argv[1:])" $@`
+args=`$pythonx -c "import sys, re; x = filter(lambda x: not re.search('--?a(rgs)?|--dryrun', x), sys.argv[2:]); print(' '.join(x))" $@`
+
+# run cli.py
 if [ $help == "True" ]; then
-    python3 ./python/cli.py --help
-    echo '  --dryrun              Simulate command run.'
+    $pythonx ./python/cli.py --help
+    echo '    --dryrun            Simulate command run.'
 else
     if [ $dryrun == "False" ]; then
-        eval `python3 ./python/cli.py $1 --args "$args"`
+        eval `$pythonx ./python/cli.py $1 --args "$args"`
     else
-        echo `python3 ./python/cli.py $1 --args "$args"` | sed $'s/; /;\\\n/g'
+        echo `$pythonx ./python/cli.py $1 --args "$args"` | sed $'s/ && /&\\\n/g'
     fi
 fi
