@@ -1,4 +1,4 @@
-#! /usr/bin/env bash
+#!/usr/bin/env bash
 
 dryrun=`python -c "import sys; print('--dryrun' in sys.argv[1:])" $@`
 args_flag=`python -c "import sys; print('--args' in sys.argv or '-a' in sys.argv[1:])" $@`
